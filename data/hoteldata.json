@@ -1,0 +1,101 @@
+{
+  "hotel": {
+    "nombre": "Hotel Costa Choco",
+    "ubicacion": "Bahía Solano, Colombia",
+    "descripcion": "Un oasis de tranquilidad y lujo en el corazón de Bahía Solano, dedicado a ofrecer una experiencia inolvidable a nuestros huéspedes.",
+    "habitaciones": [
+      {
+        "tipo": "Estándar",
+        "descripcion": "Perfecta para sentirte como en casa",
+        "precios": {
+          "temporada_baja": {
+            "1pax": "$120.000 ND",
+            "2pax": "$145.000 ND",
+            "3pax": "$175.000 ND",
+            "4pax": "$210.000 ND"
+          },
+          "temporada_alta": {
+            "1pax": "$165.000 ND",
+            "2pax": "$220.000 ND",
+            "3pax": "$275.000 ND",
+            "4pax": "$308.000 ND"
+          }
+        }
+      },
+      {
+        "tipo": "Doble",
+        "descripcion": "Perfecta para compartir en pareja y sentirte como en casa",
+        "precios": {
+          "temporada_baja": {
+            "1pax": "$139.000 DI",
+            "2pax": "$185.000 DI",
+            "3pax": "$235.000 DI",
+            "4pax": "$286.000 DI"
+          },
+          "temporada_alta": {
+            "1pax": "$184.000 DI",
+            "2pax": "$258.000 DI",
+            "3pax": "$332.000 DI",
+            "4pax": "$384.000 DI"
+          }
+        }
+      }
+    ],
+    "areas_entretenimiento": [
+      "Piscina",
+      "Bar",
+      "Playa selva (Playa privada)"
+    ],
+    "planes_turisticos": [
+      {
+        "nombre": "Avistamiento de Ballenas",
+        "descripcion": "Plan de 3 noches y 4 días que incluye avistamiento de ballenas, visitas a Playa Selva y Jurubirá, y actividades en la naturaleza.",
+        "incluye": [
+          "Recepción y traslado Aeropuerto / Hotel / Aeropuerto",
+          "Alojamiento 3 noches",
+          "3 desayunos, 3 almuerzos y 3 cenas",
+          "Salida a Playa Blanca y Jurubirá",
+          "Salida para avistamiento de ballenas",
+          "Traslados en lancha y terrestres",
+          "Tarjeta de Asistencia Médica Colasistencia"
+        ],
+        "no_incluye": [
+          "Tiquetes aéreos",
+          "Contribución turística de ingreso ($47.750)",
+          "Tasa aeroportuaria ($8.000)",
+          "Servicios no especificados",
+          "Imprevistos y propinas",
+          "Consumos de mini-bar"
+        ],
+        "precios": {
+          "sencilla": "$1,187.000",
+          "doble": "$1,950.000",
+          "triple": "$3,215.000",
+          "cuadruple": "$4,736.000"
+        }
+      },
+      {
+        "nombre": "Tour Gastronómico en Coquí",
+        "descripcion": "Visita a Coquí para disfrutar de la gastronomía local.",
+        "precio": "$360.000 por persona",
+        "minimo_personas": 4
+      },
+      {
+        "nombre": "Liberación de Tortugas en Playa Cuevitas",
+        "descripcion": "Tour para participar en la liberación de tortugas.",
+        "precio": "$100.000 por persona",
+        "no_incluye": "Transporte Mutis-Valle-Mutis"
+      }
+    ],
+    "politicas": {
+      "reserva": "Para reservar, se requieren los datos de las personas como nombres completos, números de identificación, dirección, ciudad de residencia, número telefónico y correo.",
+      "cancelacion": "Las cancelaciones se deben realizar por escrito con 15 días de anticipación a la llegada de los pasajeros, hacemos la devolución total del depósito."
+    },
+    "contacto": {
+      "telefonos": ["323 318 4887", "310 422 3377"],
+      "email": "ventas@hotelcostachoco.co",
+      "sitio_web": "www.hotelcostachoco.co",
+      "direccion": "Carrera 2 No. 6-73, Bahía Solano, Colombia"
+    }
+  }
+}
