@@ -1,52 +1,80 @@
+import os
+from dotenv import load_dotenv
+from groq import Groq
 import streamlit as st
-import requests
-import json
+from streamlit_chat import message  
 
-# Configuración de la API de LangFlow
-BASE_API_URL = "https://api.langflow.astra.datastax.com"
-LANGFLOW_ID = "541622f6-15c2-43ad-a7bf-28014cb6894f"
-FLOW_ID = "b4478717-431d-4b38-b48e-fec5142f9757"
-APPLICATION_TOKEN = "<AstraCS:ZabHIjbZgYPCUrSkZKlJUSZx:2f6202b20fca202daabb7d1c1e0f00ee76555d1a07bceeaa57737c5814d33e34>"
-TWEAKS = {
-  "ChatInput-TxwJ9": {},
-  "ChatOutput-eI86s": {},
-  "Agent-LQsAF": {},
-  "Prompt-go8Tr": {}
-}
+# Cargar variables de entorno
+load_dotenv()
 
-# Función para ejecutar el flujo de LangFlow
-def run_flow(message: str, endpoint: str = FLOW_ID, tweaks: dict = TWEAKS) -> dict:
-    """
-    Envía un mensaje al flujo de LangFlow y devuelve la respuesta.
-    """
-    api_url = f"{BASE_API_URL}/lf/{LANGFLOW_ID}/api/v1/run/{endpoint}"
-    payload = {
-        "input_value": message,
-        "output_type": "chat",
-        "input_type": "chat",
-        "tweaks": tweaks
-    }
-    headers = {"Authorization": "Bearer " + APPLICATION_TOKEN, "Content-Type": "application/json"}
-    response = requests.post(api_url, json=payload, headers=headers)
-    return response.json()
+# Obtener la API Key
+api_key = os.getenv("GROQ_API_KEY")
 
-# Interfaz de Streamlit
-st.title("Chat con el Hotel Costa Choco 🏨")
-st.write("¡Bienvenido! Escribe tu mensaje y recibirás una respuesta del asistente del Hotel Costa Choco.")
+if not api_key:
+    raise ValueError("La API Key de Groq no está configurada.")
 
-# Entrada de texto del usuario
-user_input = st.text_input("Escribe tu mensaje:")
+client = Groq(api_key=api_key)
 
-# Botón para enviar el mensaje
-if st.button("Enviar"):
-    if user_input:
-        # Ejecutar el flujo de LangFlow con el mensaje del usuario
-        response = run_flow(user_input)
-        
-        # Mostrar la respuesta
-        if "response" in response:
-            st.success(f"Respuesta: {response['response']}")
-        else:
-            st.error("No se pudo obtener una respuesta válida.")
-    else:
-        st.warning("Por favor, escribe un mensaje antes de enviar.")
+# Función para cargar el prompt desde un archivo
+def cargar_prompt(ruta_archivo="prompt.txt"):
+    try:
+        with open(ruta_archivo, "r", encoding="utf-8") as file:
+            return file.read()
+    except FileNotFoundError:
+        st.error("⚠️ Error: No se encontró el archivo de prompt.")
+        return ""
+
+# Cargar el prompt base
+PROMPT_BASE = cargar_prompt()
+
+# Inicializar historial en session_state si no existe
+if "historial" not in st.session_state:
+    st.session_state.historial = [
+        {"role": "system", "content": PROMPT_BASE}
+    ]
+
+# --- Interfaz de Streamlit ---
+st.title("Asistente Virtual - Hotel Costa Chocó")
+st.write("Haz tus preguntas sobre tarifas, servicios y más del hotel.")
+
+# Mostrar historial de conversación con streamlit-chat
+for i, mensaje in enumerate(st.session_state.historial):
+    if mensaje["role"] == "user":
+        message(mensaje["content"], is_user=True, key=f"user_{i}")
+    elif mensaje["role"] == "assistant":
+        message(mensaje["content"], is_user=False, key=f"assistant_{i}")
+
+# Entrada del usuario con `st.chat_input`
+pregunta = st.chat_input("Escribe tu pregunta y presiona Enter...")
+
+if pregunta:
+    # Agregar pregunta al historial
+    st.session_state.historial.append({"role": "user", "content": pregunta})
+
+    st.write("Procesando...")
+
+    try:
+        # Llamar a Groq con todo el historial
+        chat_completion = client.chat.completions.create(
+            messages=st.session_state.historial,
+            model="llama-3.3-70b-versatile",
+        )
+
+        # Obtener la respuesta
+        respuesta = chat_completion.choices[0].message.content
+
+        # Agregar respuesta al historial
+        st.session_state.historial.append({"role": "assistant", "content": respuesta})
+
+        # Actualizar la página para mostrar la nueva conversación
+        st.rerun()
+
+    except Exception as e:
+        st.error(f"Error al obtener la respuesta: {e}")
+
+# Botón para limpiar historial
+if st.button("Borrar Historial"):
+    st.session_state.historial = [
+        {"role": "system", "content": PROMPT_BASE}
+    ]
+    st.rerun()
