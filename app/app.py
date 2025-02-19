@@ -4,6 +4,16 @@ from groq import Groq
 import streamlit as st
 from streamlit_chat import message  
 
+
+import streamlit as st
+# logo
+st.logo(
+    "app/LOGO_HTL_COSTA_CHOCO-01.png",  
+    size="medium",
+    link="https://www.hotelcostachoco.co/"
+)
+
+
 # Cargar variables de entorno
 load_dotenv()
 
