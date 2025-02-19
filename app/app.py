@@ -8,7 +8,7 @@ from streamlit_chat import message
 import streamlit as st
 # logo
 st.logo(
-    "app/LOGO_HTL_COSTA_CHOCO-01.png",  
+    "costachoco/app/imagen.png",  
     size="medium",
     link="https://www.hotelcostachoco.co/"
 )
