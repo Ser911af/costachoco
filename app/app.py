@@ -13,6 +13,21 @@ st.logo(
     link="https://www.hotelcostachoco.co/"
 )
 
+# imagenes
+# Ruta de la carpeta donde están las imágenes
+carpeta_imagenes = "imagenes"
+
+# Obtener lista de archivos de imagen en la carpeta
+imagenes = [os.path.join(carpeta_imagenes, img) for img in os.listdir(carpeta_imagenes) if img.endswith(("jpg", "png", "jpeg"))]
+
+# Mostrar imágenes
+if imagenes:
+    st.image(imagenes, caption=[f"Imagen {i+1}" for i in range(len(imagenes))], use_container_width=True)
+else:
+    st.write("No se encontraron imágenes en la carpeta.")
+
+
+
 
 # Cargar variables de entorno
 load_dotenv()
