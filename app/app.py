@@ -14,15 +14,9 @@ st.logo(
 )
 
 # imagenes
-# Ruta de la carpeta donde están las imágenes
-# Ruta de la imagen específica
-imagen_path = "https://raw.githubusercontent.com/Ser911af/costachoco/main/app/imagen/DJI_0130.JPG"
+st.image("https://raw.githubusercontent.com/Ser911af/costachoco/main/app/imagen/DJI_0130.JPG", caption="Playa Selva")
 
-# Verificar si la imagen existe antes de mostrarla
-if os.path.exists(imagen_path):
-    st.image(imagen_path, caption="Imagen fija", use_container_width=True)
-else:
-    st.write("No se encontró la imagen especificada.")
+
 
 
 
