@@ -15,16 +15,15 @@ st.logo(
 
 # imagenes
 # Ruta de la carpeta donde están las imágenes
-carpeta_imagenes = "imagenes"
+# Ruta de la imagen específica
+imagen_path = "https://raw.githubusercontent.com/Ser911af/costachoco/main/app/imagen/DJI_0130.JPG"
 
-# Obtener lista de archivos de imagen en la carpeta
-imagenes = [os.path.join(carpeta_imagenes, img) for img in os.listdir(carpeta_imagenes) if img.endswith(("jpg", "png", "jpeg"))]
-
-# Mostrar imágenes
-if imagenes:
-    st.image(imagenes, caption=[f"Imagen {i+1}" for i in range(len(imagenes))], use_container_width=True)
+# Verificar si la imagen existe antes de mostrarla
+if os.path.exists(imagen_path):
+    st.image(imagen_path, caption="Imagen fija", use_container_width=True)
 else:
-    st.write("No se encontraron imágenes en la carpeta.")
+    st.write("No se encontró la imagen especificada.")
+
 
 
 
